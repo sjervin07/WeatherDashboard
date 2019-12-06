@@ -1,10 +1,16 @@
 var APIKey= "7d210ce3ec3c3a4699eca0939f42480f";
 var queryURL="https://api.openweathermap.org/data/2.5/weather?" + "q=Grayslake,us&units=imperial&APPID=" + APIKey;
 
+
 $.ajax({
     url: queryURL,
     method: "GET"
 })
+
+
+
+//Displaying current data except for UV
+
 
 .then(function(response) {
     $(".city").html("<h1>" + response.name + "</h1>")
@@ -16,6 +22,22 @@ $.ajax({
     $("tempF").text("Temperature (Kelvin) " + tempF);
 
 
+//Displaying UV index..not working yet
+var lat = response.coord.lat;
+var lon = response.coord.lon;
 
+var uvQuery = "http://api.openweathermap.org/data/2.5/uvi?appid=$(APIKey)&lat={lat}&lon={lon}"
+
+$.ajax({
+    url: uvQuery,
+    method: "GET"
+})
+
+.then(function(uvResponse) {
+
+    $(".uv").html("UV Index: " + uvResponse[0].value);
+
+    console.log(uvResponse);
+  });
 
 });

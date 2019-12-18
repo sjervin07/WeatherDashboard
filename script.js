@@ -1,5 +1,6 @@
 var APIKey= "7d210ce3ec3c3a4699eca0939f42480f";
 var queryURL="https://api.openweathermap.org/data/2.5/weather?" + "q=Grayslake,us&units=imperial&APPID=" + APIKey;
+var search= 
 
 
 $.ajax({
@@ -11,9 +12,12 @@ $.ajax({
 
 //Displaying current data except for UV
 
-
 .then(function(response) {
+    iconcode= response.weather[0].icon;
+    var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+    console.log(response)
     $(".city").html("<h1>" + response.name + "</h1>")
+    $(".icon").html(`<img src=${iconurl}>`);
     $(".temp").text("Temperature (F): " + response.main.temp);
     $(".humidity").text("Humidity: " + response.main.humidity);
     $(".wind").text("Wind Speed: " + response.wind.speed);
